@@ -1,0 +1,21 @@
+
+.radio_button {
+	top:100px;
+	bottom: 100px; 
+	left: 100px;
+	right: 100px;
+	/*height: 1000px;
+	width: 800px;*/
+  }
+
+.hr3 {
+	border:0;
+	height: 2px;
+	background-image: linear-gradient(to right, transparent, #008b8b, transparent);
+	padding-top: 5px;
+}
+
+#vaccine{
+	left: 50px;
+	right: 100px;
+}

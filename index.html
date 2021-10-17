@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<title>COVID-19 Datavisualisation</title>
+<meta charset="UTF-8">
+
+<!-- Import Vega & Vega-Lite (does not have to be from CDN) -->
+<script src="https://cdn.jsdelivr.net/npm/vega@5.20.2"></script>
+<script src="https://cdn.jsdelivr.net/npm/vega-lite@5.1.0"></script>
+<script src="https://cdn.jsdelivr.net/npm/vega-embed@6.17.0"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Arimo&display=swap" rel="stylesheet">
+
+<!-- CSS file -->
+<link rel="stylesheet" type="text/css" href="css/styles.css" media="all">
+<link rel="stylesheet" href="css/layout.css" type="text/css">
+
+</head>
+<body>
+<div class="wrapper row1">
+  <header id="header" class="clear">
+      <center><h1 style="color: white;">Global COVID-19</h1></center>
+  </header>
+</div>
+<div class="wrapper row2">
+  <div id="container" class="clear">
+    
+    <h2 style="color: #009ABB;">Latest Information Of COVID-19</h2>
+    <br>
+    <p style="color: black; font-size: larger;">
+      On 29th of May, 2021, COVID-19 is still one of the headache problems that every country has to solve. The situation becomes more severe when the <b style="color: #0000cd;">Comfirmed</b> cases and <b style="color: #b22222;">Deaths </b>
+      are rising day by day exponentially. However, with the appearance of COVID-19 vaccine that are manufactured by countries around the world, the circumstance has been partly controlled with the evidence that <b style="color: green;">Recovered</b>
+      cases are also increased and occupies a large percentage of <b style="color: #0000cd;">Comfirmed</b> cases.
+    </p>
+    <section id="slider"><center>
+      <div>
+        <label><input type="radio" name='thing' value='valuable' data-id="choropleth_map_total" />Total Confirmed Cases</label>
+        <label><input type="radio" name='thing' value='valuable' data-id="choropleth_map" />Recovered Cases</label>
+        <label><input type="radio" name='thing' value='valuable' data-id="choropleth_map_deaths" />Deaths</label>
+    </div>
+    </center>
+    <br>
+    <br>
+    <div id="choropleth_map" class="none"></div>
+    <div id="choropleth_map_deaths" class="none"></div>
+    <div id="choropleth_map_total" class="none"></div>
+  </section>
+    <br>
+    <br>
+    <!-- main content -->
+    <div id="homepage">
+      <!-- Services -->
+      <section id="services" class="clear">
+      <div id="scatter_plot_2"></div>
+      </section>
+      <hr class="hr3">
+      <br>
+      <h2 style="color: #009ABB;">Recovered Cases/Deaths Over Time </h1>
+      <br>
+      <p style="color: black; font-size: larger";>
+        From 1st of February to 29th of May, 2021, it seems that the situation has been controlled by most countries with the help of vaccines. The global <b style="color: green;">Recovered</b> cases are more than 40 times <b style="color: #b22222;">Dead </b> cases, this leads to
+        other businesses such as tourism, education, etc. become normalised again.
+      </p>
+      <br>
+      <div id="line_chart_slider" ></div>
+      <br>
+      <br>
+      <hr class="hr3">
+      <br>
+      <section id="intro" class="last clear">
+        <article>
+          <figure>
+            <figcaption>
+              <h2 style="color: #009ABB;">Vaccinations From January to May in 2021</h2>
+            </figcaption>
+            <br>
+            <br>
+            <br>
+            <br>
+            <p style="color: black; font-size: larger;">In 2021, medical companies around the world have participated in 
+              the race of COVID-19 vaccine. On May 30th, there are 3 most popular vaccine types that are bought and used by many 
+              countries: <b style="color: green;">Pfizer</b>, <b style="color: red;">Moderna</b> and 
+              <b style="color: #008b8b">Astra Zeneca</b>. Following up are some companies such as <b style="color: #f5c71a;">Sinopharm</b>, <b style="color: purple;">Sinovac</b>, etc. 
+              that are also providing their vaccines with the high quality and strong immunity </p>
+            <div id="vaccine"></div>
+          </figure>
+        </article>
+      </section>
+    </div>
+  </div>
+</div>
+<footer id="footer">
+  <p style="text-align: right; color: black;">© Copyright Reserved by Tran Tuyen Nguyen</p>
+</footer>
+
+<script type="text/javascript">
+
+  var spec2 = "js/choropleth_map.vg.json";
+  vegaEmbed('#choropleth_map', spec2,{"actions": false}).then(function(result) {
+    // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
+  }).catch(console.error);
+
+  var spec3 = "js/diverging_stacked_bar_chart.vg.json";
+  vegaEmbed('#diverging_stacked_bar_chart', spec3,{"actions": false}).then(function(result) {
+    // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
+  }).catch(console.error);
+
+  var spec4 = "js/scatter_plot_2.vg.json";
+  vegaEmbed('#scatter_plot_2', spec4,{"actions": false}).then(function(result) {
+    // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
+  }).catch(console.error);
+
+  
+  var spec5 = "js/chropleth_map_deaths.vg.json";
+  vegaEmbed('#choropleth_map_deaths', spec5, {"actions": false}).then(function(result) {
+  }).catch(console.error);
+
+  var spec6 = "js/choropleth_map_total.vg.json";
+  vegaEmbed('#choropleth_map_total', spec6,{"actions": false}).then(function(result) {
+  }).catch(console.error);
+
+  var spec7 = "js/line_chart_slider.vg.json";
+  vegaEmbed('#line_chart_slider', spec7,{"actions": false}).then(function(result) {
+  }).catch(console.error);
+  
+  var spec8 = "js/scatter_plot_2_deaths.vg.json";
+  vegaEmbed('#scatter_plot_2_deaths', spec8).then(function(result) {
+    // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
+  }).catch(console.error);
+
+  var spec9 = "js/vaccine.vg.json";
+  vegaEmbed('#vaccine', spec9).then(function(result) {
+    // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
+  }).catch(console.error);
+
+</script>
+
+<script type="text/javascript">
+  document.getElementById("choropleth_map").style.display = "none";
+  document.getElementById("choropleth_map_deaths").style.display = "none";
+
+  $(document).ready(function() {
+    $(':radio').change(function (event) {
+    var id = $(this).data('id');
+    if(id == "choropleth_map"){
+      document.getElementById(id).style.display = "block";
+      document.getElementById("choropleth_map_deaths").style.display = "none";
+      document.getElementById("choropleth_map_total").style.display = "none";
+    }
+    else if(id == "choropleth_map_deaths"){
+      document.getElementById(id).style.display = "block";
+      document.getElementById("choropleth_map").style.display = "none";
+      document.getElementById("choropleth_map_total").style.display = "none";
+    }
+    else if(id == "choropleth_map_total"){
+      document.getElementById(id).style.display = "block";
+      document.getElementById("choropleth_map").style.display = "none";
+      document.getElementById("choropleth_map_deaths").style.display = "none";
+    }
+});
+  });
+</script>
+</body>
+</html>

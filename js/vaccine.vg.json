@@ -1,0 +1,82 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    
+    "data": {
+        "url": "data/vaccine_data/country_vaccinations_by_manufacturer.csv"
+    },
+    "spacing": 160,
+    "params": [
+        {
+          "name": "Month_selection",
+          "value": 5,
+          "bind": {
+            "input": "range",
+            "min": 1,
+            "max": 5,
+            "step": 1,
+            "name": "Month:  "
+          }
+        },
+        {
+            "name": "Country_selection",
+            "bind": {
+              "input": "select",
+              "options": [
+                null,
+                "United States",
+                "European Union"
+              ],
+              "labels": [
+                "Global",
+                "United States",
+                "European Union"
+              ],
+              "name": "Country Selection: "
+            }
+          }
+    ],
+    "transform": [
+        {"filter": "datum.total_vaccinations > 0"},
+        {"filter": "Month_selection == null || month(datum.date) == Month_selection - 1"},
+        {"filter": "Country_selection == null || datum.location == Country_selection"}
+    ],
+    "columns": 2,
+    "concat": [
+    {
+        "title": "Total Month Vaccinations",
+        "width": 300,
+        "height": 250,
+        "mark": {"type": "arc", "innerRadius": 50},
+        "encoding": {
+            "theta": {"field": "sum_total_vaccinations", "type": "quantitative", "sort":"descending"},
+            "color": {"field": "vaccine", "type": "nominal", "title": "Company"},
+            "tooltip": [
+                {"aggregate":"sum","field": "total_vaccinations", "type": "quantitative", "format": ",", "title":"Total vaccinations"},
+                {"field": "vaccine", "type": "nominal" ,"title":"Company"}
+            ]
+        }
+    },
+    {
+        "title": "Vaccinations Of Each Day",
+        "width": 300,
+        "height": 250,
+        "mark": {"type": "line" , "interpolate": "cardinal", "color": "#1e90ff","point":true, "strokeWidth": {"expr": "2"}},
+        "encoding": {
+          "x":{
+            "field": "date", "timeUnit":"yearmonthdate", "type": "temporal", "title":"Date"
+          },
+          "y": {
+            "aggregate": "sum",
+            "field": "total_vaccinations",
+            "title": "Total Vaccinations"
+          },
+          "color": {"field": "vaccine", "type": "nominal"},
+          "tooltip":[
+            {"field": "vaccine","type": "nominal", "title":"Company"},
+            {"aggregate": "sum","field": "total_vaccinations", "type": "quantitative", "format": ",", "title":"Total Vaccinations"},
+            {"field": "date", "timeUnit":"yearmonthdate", "type": "temporal", "title":"Date"}
+          ]
+        }
+    }
+]
+  }

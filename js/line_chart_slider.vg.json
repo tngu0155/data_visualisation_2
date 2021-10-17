@@ -1,0 +1,157 @@
+
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "data": {"url": "data/covid_19_data.csv"},
+  "columns": 2,
+  "spacing": 50,
+  "params": [
+    {
+      "name": "Country_selection",
+      "bind": {
+        "input": "select",
+        "options": [
+          null,
+          "UK",
+          "Australia",
+          "Japan",
+          "New Zealand",
+          "Mainland China"
+        ],
+        "labels": [
+          "Global",
+          "United Kingdom",
+          "Australia",
+          "Japan",
+          "New Zealand",
+          "China"
+        ],
+        "name": "Country Selection: "
+      }
+    }
+  ],
+  "transform": [
+    {"filter": "datum.Recovered > 0"},
+    {"filter": "datum.Deaths > 0"},
+    {
+      "filter": "Country_selection == null || datum.Country == Country_selection"
+    }
+  ],
+  "concat": [
+  {
+    "width": 300,
+    "encoding": {
+      "x": {
+        "field": "ObservationDate",
+        "timeUnit": "yearmonthdate",
+        "type": "temporal",
+        "scale": {"domain": {"param": "brush"}},
+        "axis": {"title": ""}
+      }
+    },
+    "layer": [
+      {
+        "mark": {"stroke": "#32cd32", "type": "bar", "interpolate": "monotone"},
+        "encoding": {
+          "y": {
+            "aggregate": "sum",
+            "field": "Recovered",
+            "title": "Total Recovered Cases",
+            "axis": {"titleColor":"#32cd32"}
+          },
+          "tooltip":[
+            {"aggregate": "sum","field": "Recovered", "type": "quantitative", "format": ",", "title":"Total Recovered Cases"},
+            {"field": "ObservationDate", "timeUnit":"yearmonthdate", "type": "temporal", "title":"Date"}
+          ],
+          "color": {
+            "value": "#32cd32"
+          }
+        }
+      },
+      {
+        "mark": {"type": "line", "interpolate": "cardinal", "color": "#1e90ff", "strokeWidth": {"expr": "6"}},
+        "encoding": {
+          "y": {
+            "aggregate": "sum",
+            "field": "Confirmed",
+            "title": "Confirmed Cases",
+            "axis": {"titleColor": "#1e90ff"}
+          },
+          "tooltip":[
+            {"aggregate": "sum","field": "Confirmed", "type": "quantitative", "format": ",", "title":"Total Confirmed Cases"},
+            {"field": "ObservationDate", "timeUnit":"yearmonthdate", "type": "temporal", "title":"Date"}
+          ]
+        }
+      }
+    ],
+    "resolve": {"scale": {"y": "independent"}}
+  },
+  {
+    "width": 300,
+    "encoding": {
+      "x": {
+        "field": "ObservationDate",
+        "timeUnit":"yearmonthdate",
+        "type": "temporal",
+        "scale": {"domain": {"param": "brush"}},
+        "axis": {"title": ""}
+      }
+    },
+    "layer": [
+      {
+        "mark": {"stroke": "#b22222", "type": "bar", "interpolate": "monotone"},
+        "encoding": {
+          "y": {
+            "aggregate": "sum",
+            "field": "Deaths",
+            "title": "Total Deaths",
+            "axis": {"titleColor":"#b22222"}
+          },
+          "tooltip":[
+            {"aggregate": "sum","field": "Deaths", "type": "quantitative", "format": ",", "title":"Total Deaths"},
+            {"field": "ObservationDate", "timeUnit":"yearmonthdate", "type": "temporal", "title":"Date"}
+          ],
+          "color": {
+            "value": "#b22222"
+          }
+        }
+      },
+      {
+        "mark": {"type": "line" , "interpolate": "cardinal", "color": "#1e90ff", "strokeWidth": {"expr": "6"}},
+        "encoding": {
+          "y": {
+            "aggregate": "sum",
+            "field": "Confirmed",
+            "title": "Confirmed Cases",
+            "axis": {"titleColor": "#1e90ff"}
+          },
+          "tooltip":[
+            {"aggregate": "sum","field": "Confirmed", "type": "quantitative", "format": ",", "title":"Total Confirmed Cases"},
+            {"field": "ObservationDate", "timeUnit":"yearmonthdate", "type": "temporal", "title":"Date"}
+          ]
+        }
+      }
+    ],
+    "resolve": {"scale": {"y": "independent"}}
+  },
+  {
+    "title":"Use this to filter out the data based on time",
+    "width": 400,
+    "height": 15,
+    "mark": "area",
+    "params": [{
+      "name": "brush",
+      "select": {"type": "interval", "encodings": ["x"]}
+    }],
+    "encoding": {
+      "x": {
+        "field": "ObservationDate",
+        "timeUnit":"yearmonthdate",
+        "type": "temporal",
+        "title":"Date"
+      },
+      "y": {
+        
+      }
+    }
+  }]
+}
